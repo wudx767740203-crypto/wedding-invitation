@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>吴德星&李婵的婚礼邀请</title>
+
+  <!-- ===== 微信/朋友圈/QQ/社交平台分享卡片元数据（与微信标准卡片完全对齐） ===== -->
+  <meta name="description" content="我们结婚啦，诚邀您参加我们的婚礼！">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="吴德星&李婵的婚礼邀请">
+  <meta property="og:description" content="我们结婚啦，诚邀您参加我们的婚礼！">
+  <meta property="og:image" content="assets/images/share_thumb.jpg">
+  <meta property="og:image:width" content="500">
+  <meta property="og:image:height" content="500">
+  <link rel="image_src" href="assets/images/share_thumb.jpg">
+  <meta itemprop="name" content="吴德星&李婵的婚礼邀请">
+  <meta itemprop="description" content="我们结婚啦，诚邀您参加我们的婚礼！">
+  <meta itemprop="image" content="assets/images/share_thumb.jpg">
+  <!-- ===== 分享元数据结束 ===== -->
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="format-detection" content="telephone=no, email=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#FAF8F5">
+
+  <!-- 全站统一苹果原生字体系统 (San Francisco + 苹方 PingFang SC) -->
+  <style>
+    :root {
+      --apple-font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "SF Pro", "PingFang SC", "PingFangSC-Regular", "PingFangSC-Medium", "PingFangSC-Semibold", "Hiragino Sans GB", "Helvetica Neue", Helvetica, "Segoe UI", Arial, sans-serif;
+    }
+    *, *::before, *::after {
+      font-family: var(--apple-font) !important;
+    }
+    .swiper-button-next:after,
+    .swiper-button-prev:after,
+    [class^="swiper-icon"],
+    [class*=" swiper-icon"] {
+      font-family: swiper-icons !important;
+    }
+  </style>
+
+  <!-- 首屏图片优先，其余图片由浏览器在接近可视区域时再加载 -->
+  <link rel="preload" href="assets/images/cover.jpg" as="image" fetchpriority="high">
+  <link rel="stylesheet" href="css/style.css?v=20260910_tech">
+</head>
+<body>
+
+  <!-- 安卓微信不会可靠地自动播放有声内容：由来宾点按后进入请帖并解锁音乐。 -->
+  <div id="invitation-gate" class="invitation-gate" role="dialog" aria-label="婚礼请帖开场">
+    <img class="invitation-gate-bg" src="assets/images/cover.jpg" alt="吴德星与李婵婚纱照">
+    <div class="invitation-gate-shade"></div>
+    <div class="invitation-gate-content">
+      <p class="gate-kicker">WEDDING INVITATION</p>
+      <h1>吴德星 <span>&amp;</span> 李婵</h1>
+      <i class="gate-rule"></i>
+      <p class="gate-date">2026 · 09 · 28</p>
+      <p class="gate-place">星期一 · 农历八月十八 · 广西桂平</p>
+      <p class="gate-tip">轻触按钮 · 开启我们的故事</p>
+      <button class="gate-open-button" onclick="window.startExperience()">
+        <small>OPEN INVITATION</small>
+        <strong>打开请帖</strong>
+      </button>
+    </div>
+
+    <!-- 封面底部技术支持署名 -->
+    <div class="gate-tech-credits" aria-label="技术支持">
+      <span class="gate-tech-label">— 技 术 支 持 —</span>
+      <span class="gate-tech-names">吴德星<span class="sep">·</span>李婵<span class="sep">·</span>GPT-6<span class="sep">·</span>Gemini 3.8<span class="sep">·</span>WorkBuddy</span>
+    </div>
+  </div>
+
+  <!-- 微信爬虫抓取专用首图（尺寸必须>=300x300，不可使用display:none，置于body首位） -->
+  <div style="width:0px; height:0px; overflow:hidden; position:absolute; left:-9999px; top:-9999px; margin:0; padding:0; line-height:0; font-size:0;">
+    <img src="assets/images/share_thumb.jpg" width="500" height="500" alt="吴德星和李婵婚礼的邀请">
+  </div>
+
+  <!-- 页面直入首屏大片封面，由全屏粉色磨砂技术支持弹窗优雅开场 -->
+
+  <!-- 婚礼浪漫配乐：范玮琪《最重要的决定》 -->
+  <audio id="wedding-audio" src="assets/music/zuizhongyaodejueding.m4a" preload="metadata" playsinline webkit-playsinline></audio>
+
+  <!-- ==================== 2. 顶部悬浮控制栏 (韩式极简纯白浮动胶囊) ==================== -->
+  <div class="floating-top-bar">
+    <!-- 自动从容快览平滑滚动开关 -->
+    <button id="auto-scroll-btn" class="floating-pill auto-scroll-toggle-btn" onclick="window.toggleAutoScroll()" title="点击开启或暂停自动浏览">
+      <span class="auto-scroll-dot"></span>
+      <span id="auto-scroll-label">手动浏览</span>
+    </button>
+
+    <!-- 音乐开关（黑胶唱片 + 歌曲名称） -->
+    <div class="floating-pill music-control-box" onclick="window.openMusicSheet()" title="点击切换婚礼配乐曲目">
+      <button id="music-btn" class="music-vinyl-disc playing" onclick="event.stopPropagation(); window.openMusicSheet()" aria-label="打开歌单" title="点击打开歌单，可点歌曲播放/暂停">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 14.5c-2.49 0-4.5-2.01-4.5-4.5S9.51 7.5 12 7.5s4.5 2.01 4.5 4.5-2.01 4.5-4.5 4.5zm0-5.5c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"/>
+        </svg>
+      </button>
+      <span id="music-tag-title" class="music-tag-text">♫ 范玮琪 · 最重要的决定</span>
+      <div id="sound-wave-bars" class="sound-wave-bars playing">
+        <span class="sound-bar"></span>
+        <span class="sound-bar"></span>
+        <span class="sound-bar"></span>
+      </div>
+      <button class="music-switch-badge" onclick="event.stopPropagation(); window.nextTrack();" title="一键切换下一首">切歌 ↻</button>
+    </div>
+  </div>
+
+  <!-- ==================== 3. 互动送祝福爱心浮标 (Floating Hearts) ==================== -->
+  <button id="floating-heart-btn" class="floating-heart-btn with-kitty-bow" onclick="window.sendFloatingHeart(event)" title="轻触为新人点赞送祝福">
+    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    <span id="heart-count-pill" class="heart-count-pill">99+</span>
+  </button>
+
+  <!-- ==================== 4. 移动端主体长卷容器 (Magazine Flow) ==================== -->
+  <div class="device-wrapper">
+
+    <!-- Section 1: 首屏大片封面 (Hero Cover) -->
+    <section class="hero-cover-section">
+      <img id="img-cover-bg" class="hero-cover-bg" src="assets/images/cover.jpg" alt="吴德星 &amp; 李婵 婚纱照">
+      <div class="hero-mask-gradient"></div>
+
+      <!-- 极简底部留白，零遮挡人物面部与身体 -->
+      <div class="hero-content-box">
+        <h1 class="hero-names-display">吴德星 <span>&amp;</span> 李婵</h1>
+        <p class="hero-date-row">2026.09.28 星期一 · 农历八月十八</p>
+        <p class="hero-location-text">广西桂平</p>
+      </div>
+    </section>
+
+    <!-- Section 2: 甜美誓言 (极简文字 + Hello Kitty 浪漫主题) -->
+    <section class="korean-section" id="section-story">
+      <div class="section-head">
+        <span class="section-tag-en">KITTY &amp; DANIEL · SWEET WEDDING</span>
+        <h2 class="section-title-cn">我们要结婚啦</h2>
+      </div>
+
+      <div class="letter-card kitty-card-styled">
+        <!-- 去掉角落蝴蝶结，呈现精致高定 Hello Kitty & Dear Daniel 婚礼卡通大片 -->
+        <div class="kitty-mascot-badge">
+          <img src="assets/images/kitty_colored_couple.jpg" alt="Hello Kitty &amp; Dear Daniel" class="kitty-mascot-graphic">
+          <span class="kitty-mascot-caption">DANIEL &amp; KITTY · SWEET WEDDING</span>
+        </div>
+
+        <!-- 甜蜜誓约与经典爱情台词 -->
+        <h3 class="letter-big-vow" style="white-space: nowrap;">“斯人若彩虹，遇上方知有”</h3>
+        <p class="letter-body-p-short">
+          “当你想和某个人共度余生，你希望你的余生越快开始越好。”<br>
+          在最美好的时光里，我们幸运地遇见了彼此。<br>
+          从心动到白首，把所有的偏爱与温柔都交付给对方。<br>
+          <b>2026.09.28 · 诚邀您亲临现场，见证我们的幸福时刻！</b>
+        </p>
+      </div>
+
+      <!-- 创意单人照展示：连理对映 · 拍立得艺术微倾双生相框 -->
+      <div class="solo-creative-showcase">
+        <div class="solo-creative-header">
+          <span class="solo-creative-tag">TWO SOULS · ONE LOVE</span>
+        </div>
+
+        <div class="solo-creative-diptych">
+          <!-- 新郎拍立得相框 (微倾 -2.6度) -->
+          <div class="polaroid-card groom-polaroid" onclick="window.openLightbox('assets/images/ea04e976bade7397ec503112983280eb.png')" title="点击查看新郎高清大片">
+            <div class="washi-tape tape-left"></div>
+            <div class="polaroid-inner">
+              <div class="polaroid-img-box">
+                <img src="assets/images/ea04e976bade7397ec503112983280eb.png" alt="新郎" loading="lazy" decoding="async">
+              </div>
+              <div class="polaroid-footer">
+                <span class="polaroid-handwriting">HIS GAZE</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 中央同心互映心动光环 -->
+          <div class="diptych-heart-connector">
+            <div class="heart-pulse-circle">
+              <span class="heart-icon">🤍</span>
+            </div>
+          </div>
+
+          <!-- 新娘拍立得相框 (微倾 +2.6度) -->
+          <div class="polaroid-card bride-polaroid" onclick="window.openLightbox('assets/images/7ebe2b5d3c02f93abf9efc605474f2cb.jpg')" title="点击查看新娘高清大片">
+            <div class="washi-tape tape-right"></div>
+            <div class="polaroid-inner">
+              <div class="polaroid-img-box">
+                <img src="assets/images/7ebe2b5d3c02f93abf9efc605474f2cb.jpg" alt="新娘" loading="lazy" decoding="async">
+              </div>
+              <div class="polaroid-footer">
+                <span class="polaroid-handwriting">HER SMILE</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 底部心动诗签 -->
+        <div class="solo-creative-caption">
+          <span class="caption-sparkle">✦</span>
+          <p class="caption-text">两心相契 · 目光所及皆是你</p>
+          <span class="caption-sparkle">✦</span>
+        </div>
+
+        <!-- 红色可爱繁体喜字徽章 (符合 Hello Kitty 软萌圆润风格，纯粹喜字无冗余文字) -->
+        <div class="solo-traditional-xi-wrapper">
+          <div class="xi-crest-row">
+            <div class="xi-branch-line left"></div>
+            <div class="kitty-xi-container">
+              <div class="kitty-bow-badge">
+                <svg viewBox="0 0 40 28" class="kitty-bow-svg">
+                  <path d="M15 14 C9 6, 2 8, 2 14 C2 20, 9 22, 15 14 Z" fill="#E82A38" stroke="#FFFFFF" stroke-width="1.2"/>
+                  <path d="M25 14 C31 6, 38 8, 38 14 C38 20, 31 22, 25 14 Z" fill="#E82A38" stroke="#FFFFFF" stroke-width="1.2"/>
+                  <ellipse cx="20" cy="14" rx="4.5" ry="4.5" fill="#E82A38" stroke="#FFFFFF" stroke-width="1.2"/>
+                  <circle cx="18.5" cy="12.5" r="1.2" fill="#FFFFFF" opacity="0.6"/>
+                </svg>
+              </div>
+              <div class="kitty-xi-medallion">
+                <span class="kitty-cute-xi-char">囍</span>
+              </div>
+            </div>
+            <div class="xi-branch-line right"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: 精选婚纱影集画报 (Creative Wedding Album) -->
+    <section class="korean-section" style="padding-top: 16px;" id="section-gallery">
+      <!-- 20张创意相册大片画报 -->
+      <div id="view-lookbook" class="gallery-view-lookbook">
+        <!-- 动态由 JS 注入精选大片画报 -->
+      </div>
+    </section>
+
+    <!-- Section 5: 2026年9月韩国极简日历 & D-Day 倒计时 (Calendar & D-Day) -->
+    <section class="korean-section" style="background: var(--k-bg-warm);">
+      <div class="section-head">
+        <span class="section-tag-en">WEDDING DAY</span>
+        <h2 class="section-title-cn">吉日良辰 · 倒计时</h2>
+        <p class="section-sub-cn">2026.09.28 · 农历八月十八</p>
+      </div>
+
+      <div class="calendar-card">
+        <div class="calendar-top-month">
+          <p class="cal-month-en">SEPTEMBER 2026</p>
+          <p class="cal-month-sub">二零二六年 · 九月</p>
+        </div>
+
+        <table class="calendar-grid-table">
+          <thead>
+            <tr>
+              <th>SUN</th><th>MON</th><th>TUE</th><th>WED</th><th>THU</th><th>FRI</th><th>SAT</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="cal-day-other-month">30</td><td class="cal-day-other-month">31</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td>
+            </tr>
+            <tr>
+              <td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td>
+            </tr>
+            <tr>
+              <td>13</td><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td>19</td>
+            </tr>
+            <tr>
+              <td>20</td><td>21</td><td>22</td><td>23</td><td>24</td><td>25</td><td>26</td>
+            </tr>
+            <tr>
+              <td>27</td>
+              <!-- 9月28日：婚礼吉日红心圈出 -->
+              <td class="cal-wedding-day">
+                <div class="cal-wedding-day-circle">
+                  28
+                  <span class="cal-wedding-heart-badge">❤️</span>
+                </div>
+              </td>
+              <td>29</td><td>30</td><td class="cal-day-other-month">1</td><td class="cal-day-other-month">2</td><td class="cal-day-other-month">3</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- D-Day 倒计时部件 -->
+        <div class="dday-countdown-box">
+          <span class="dday-main-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            D-DAY COUNTDOWN
+          </span>
+
+          <div class="dday-digits-row">
+            <div class="dday-digit-cell">
+              <span id="dday-d" class="dday-num">00</span>
+              <span class="dday-unit">DAYS 天</span>
+            </div>
+            <div class="dday-digit-cell">
+              <span id="dday-h" class="dday-num">00</span>
+              <span class="dday-unit">HOURS 时</span>
+            </div>
+            <div class="dday-digit-cell">
+              <span id="dday-m" class="dday-num">00</span>
+              <span class="dday-unit">MINS 分</span>
+            </div>
+            <div class="dday-digit-cell">
+              <span id="dday-s" class="dday-num">00</span>
+              <span class="dday-unit">SECS 秒</span>
+            </div>
+          </div>
+
+          <p class="dday-seat-tip">距离 吴德星 &amp; 李婵 的婚礼大日子开席还有</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 6: 地点导航与交通指南 (Location & Navigation) -->
+    <section class="korean-section">
+      <div class="section-head">
+        <span class="section-tag-en">LOCATION</span>
+        <h2 class="section-title-cn">婚礼吉日 · 现场导航</h2>
+        <p class="section-sub-cn">期待老友亲朋齐聚 · 一起吃席喝喜酒</p>
+      </div>
+
+      <div class="location-card">
+        <!-- 婚礼时间 -->
+        <div class="loc-row-item">
+          <svg class="loc-icon-svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/>
+          </svg>
+          <div>
+            <p class="loc-meta-label">DATE &amp; TIME</p>
+            <h4 class="loc-meta-big">2026年9月28日 · 11:58</h4>
+            <p class="loc-meta-sub">农历八月十八 · 星期一（中午开席）</p>
+          </div>
+        </div>
+
+        <!-- 男方喜宴地点 -->
+        <div class="loc-row-item">
+          <svg class="loc-icon-svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+          </svg>
+          <div style="flex: 1;">
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <p class="loc-meta-label">GROOM'S VENUE · 男方喜宴</p>
+              <span class="venue-badge-pill groom-pill">男方喜宴</span>
+            </div>
+            <h4 class="loc-meta-big">桂平市罗播乡六凤村</h4>
+            <p class="loc-meta-sub">广西壮族自治区贵港市桂平市罗播乡六凤村（现场设有喜棚与路标指引）</p>
+            <div class="venue-row-btns">
+              <button class="btn-venue-mini primary" onclick="window.openMapSheet('groom')">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>
+                导航去男方
+              </button>
+              <button class="btn-venue-mini" onclick="window.copyAddressText('groom')">复制地址</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 女方出阁/迎亲地址 -->
+        <div class="loc-row-item">
+          <svg class="loc-icon-svg" viewBox="0 0 24 24" fill="#C25B72">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+          </svg>
+          <div style="flex: 1;">
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <p class="loc-meta-label" style="color: #C25B72;">BRIDE'S VENUE · 女方地址</p>
+              <span class="venue-badge-pill bride-pill">女方地址</span>
+            </div>
+            <h4 class="loc-meta-big">广西桂平罗播乡叹自由酒店</h4>
+            <p class="loc-meta-sub">广西贵港市桂平市罗播乡S206省道 · 叹自由酒店（罗播店）</p>
+            <div class="venue-row-btns">
+              <button class="btn-venue-mini primary" style="background: #A8384E; border-color: #A8384E;" onclick="window.openMapSheet('bride')">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>
+                导航去女方
+              </button>
+              <button class="btn-venue-mini" onclick="window.copyAddressText('bride')">复制地址</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 停车指南 -->
+        <div class="loc-row-item">
+          <svg class="loc-icon-svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.85 7h10.29l1.04 3H5.81l1.04-3zM19 17H5v-4.66l.12-.34h13.77l.11.34V17z"/><circle cx="7.5" cy="14.5" r="1.5"/><circle cx="16.5" cy="14.5" r="1.5"/></svg>
+          <div>
+            <p class="loc-meta-label">PARKING TIPS · 停车指南</p>
+            <p class="loc-meta-sub">男方喜宴：停车场在村里的篮球场（免费规范停车，现场有老表热情指引）；女方酒店：酒店门前及专属停车场规范停车</p>
+          </div>
+        </div>
+
+        <!-- 导航按钮组 -->
+        <div class="loc-actions-grid">
+          <button class="btn-nav-primary" onclick="window.openMapSheet()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>
+            一键地图导航（双方地址）
+          </button>
+          <button class="btn-nav-secondary" onclick="window.copyAddressText()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+            复制地址
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 7: 赴宴登记与祝福留言 (RSVP & Guestbook) -->
+    <section class="korean-section" style="background: var(--k-bg-warm);">
+      <div class="section-head">
+        <span class="section-tag-en">GUEST RSVP</span>
+        <h2 class="section-title-cn">赴宴登记 · 留下祝福</h2>
+        <p class="section-sub-cn">期待您的光临 · 提前告诉我们，好为您备好美酒佳肴与席位</p>
+      </div>
+
+      <div class="rsvp-card">
+        <form id="rsvp-form" onsubmit="window.submitRsvp(event)" class="rsvp-form-group">
+          <div class="form-item-block">
+            <label>您的尊姓大名</label>
+            <input id="rsvp-name" class="form-input-korean" type="text" placeholder="请问怎么称呼您？" required>
+          </div>
+
+          <div class="form-item-block">
+            <label>出席人数</label>
+            <select id="rsvp-count" class="form-input-korean">
+              <option value="1人">1人 · 欣然赴约</option>
+              <option value="2人">2人 · 携伴同往</option>
+              <option value="全家">全家 · 一起吃席</option>
+              <option value="遗憾缺席">遗憾缺席 · 遥祝幸福</option>
+            </select>
+          </div>
+
+          <div class="form-item-block">
+            <label>给新人的祝福</label>
+            <textarea id="rsvp-wish" class="form-input-korean" rows="3" placeholder="写一句真挚温暖的悄悄话..."></textarea>
+          </div>
+
+          <button type="submit" class="btn-submit-rsvp">
+            确认提交登记
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Section 8: 尾页致谢与微信分享 (Ending & Share) -->
+    <section class="ending-section">
+      <div class="ending-kitty-wrap">
+        <img src="assets/images/kitty_colored_couple.jpg" alt="Hello Kitty &amp; Dear Daniel" class="ending-mascot-graphic">
+        <span class="kitty-ending-sub">DANIEL &amp; KITTY · 2026.09.28</span>
+      </div>
+      <h3 class="ending-thanks-title">满心期待 · 婚礼见！</h3>
+      <p class="ending-thanks-sub">感谢一路见证我们成长与幸福的每一位亲友</p>
+      <p class="ending-thanks-sub" style="margin-top: 8px; font-weight: 500; color: var(--k-accent-dark);">2026.09.28 · 桂平市罗播乡六凤村 · 敬备喜筵，不见不散！</p>
+
+      <button class="btn-share-invite" onclick="window.openShareHint()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+        分享给微信好友 / 朋友圈
+      </button>
+    </section>
+
+  </div><!-- /device-wrapper -->
+
+  
+  <!-- ==================== 韩国流行标配：BGM 婚礼配乐点播台弹窗 ==================== -->
+  <div id="music-sheet-modal" class="modal-overlay" onclick="if(event.target===this)window.closeMusicSheet()">
+    <div class="modal-content-panel bgm-sheet-panel">
+      <h3 class="modal-head-title">婚礼专属配乐 · 随心点播</h3>
+      <p style="text-align: center; font-size: 12px; color: var(--k-text-muted); margin-top: -10px;">精选中韩顶流婚礼名曲 · 适配不同浪漫心境</p>
+
+      <div id="bgm-track-list" class="bgm-track-list">
+        <!-- 动态注入 3 首精选配乐 -->
+      </div>
+
+      <button class="modal-close-btn" onclick="window.closeMusicSheet()">收起点播台</button>
+    </div>
+  </div>
+
+  <!-- ==================== 5. 地图导航弹窗 ==================== -->
+  <div id="map-sheet-modal" class="modal-overlay" onclick="if(event.target===this)window.closeMapSheet()">
+    <div class="modal-content-panel">
+      <h3 class="modal-head-title">选择手机地图导航</h3>
+      <div class="map-tabs-container">
+        <button id="tab-venue-groom" class="map-tab-btn active" onclick="window.switchMapTarget('groom')">男方喜宴 (六凤村)</button>
+        <button id="tab-venue-bride" class="map-tab-btn" onclick="window.switchMapTarget('bride')">女方地址 (叹自由酒店)</button>
+      </div>
+      <p id="map-target-dest-hint" style="text-align: center; font-size: 12px; color: var(--k-text-muted); margin: -4px 0 12px 0;">导航目的地：桂平市罗播乡六凤村</p>
+      <div class="map-option-list">
+        <div class="map-option-btn" onclick="window.startNavigation('amap')">
+          <span>高德地图（推荐）</span>
+          <span style="color: var(--k-accent-dark);">导航 &gt;</span>
+        </div>
+        <div class="map-option-btn" onclick="window.startNavigation('qq')">
+          <span>腾讯地图（微信内置）</span>
+          <span style="color: var(--k-accent-dark);">导航 &gt;</span>
+        </div>
+        <div class="map-option-btn" onclick="window.startNavigation('baidu')">
+          <span>百度地图</span>
+          <span style="color: var(--k-accent-dark);">导航 &gt;</span>
+        </div>
+        <div class="map-option-btn" onclick="window.startNavigation('apple')">
+          <span>Apple 地图（iPhone）</span>
+          <span style="color: var(--k-accent-dark);">导航 &gt;</span>
+        </div>
+      </div>
+      <button class="modal-close-btn" onclick="window.closeMapSheet()">取消</button>
+    </div>
+  </div>
+
+  <!-- ==================== 6. 微信分享指引遮罩 ==================== -->
+  <div id="wechat-share-layer" class="wechat-share-layer" onclick="window.closeShareHint()">
+    <svg class="share-arrow-svg" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2">
+      <path d="M12 19V5M5 12l7-7 7 7"/>
+    </svg>
+    <p class="share-tip-paragraph">
+      点击右上角「···」<br>
+      分享到朋友圈或发给好友<br>
+      一起见证吴德星 &amp; 李婵的大日子！
+    </p>
+  </div>
+
+  <!-- ==================== 7. 全屏相册 Lightbox ==================== -->
+  <div id="lightbox-box" class="lightbox-container" onclick="window.closeLightbox()">
+    <button class="lightbox-x-btn" onclick="window.closeLightbox()">&times;</button>
+    <img id="lightbox-view-img" class="lightbox-main-img" src="" alt="婚纱大片全屏欣赏">
+  </div>
+
+  <!-- ==================== 8. Toast 提示 ==================== -->
+  <div id="mini-toast" class="mini-toast"></div>
+
+  <!-- 引用脚本文件 -->
+  <script src="config/wedding.js?v=20260909_wechat"></script>
+  <script src="js/app.js?v=20260909_wechat"></script>
+
+  <!-- 微信内置浏览器转发定制监听（兼容原生 WeixinJSBridge） -->
+  <script>
+    (function () {
+      function getFullShareUrl(relative) {
+        try {
+          return new URL(relative, window.location.href).href;
+        } catch (e) {
+          return relative;
+        }
+      }
+
+      var shareData = {
+        title: "吴德星&李婵的婚礼邀请",
+        desc: "我们结婚啦，诚邀您参加我们的婚礼！",
+        link: window.location.href.split("#")[0],
+        imgUrl: getFullShareUrl("assets/images/share_thumb.jpg")
+      };
+
+      function bindWechatShare() {
+        if (typeof WeixinJSBridge === "undefined") return;
+        // 监听「发送给朋友」
+        WeixinJSBridge.on("menu:share:appmessage", function () {
+          WeixinJSBridge.invoke("sendAppMessage", shareData, function (res) {});
+        });
+        // 监听「分享到朋友圈」
+        WeixinJSBridge.on("menu:share:timeline", function () {
+          WeixinJSBridge.invoke("shareTimeline", {
+            title: shareData.title + " · " + shareData.desc,
+            link: shareData.link,
+            imgUrl: shareData.imgUrl
+          }, function (res) {});
+        });
+      }
+
+      if (typeof WeixinJSBridge === "undefined") {
+        document.addEventListener("WeixinJSBridgeReady", bindWechatShare, false);
+      } else {
+        bindWechatShare();
+      }
+    })();
+  </script>
+</body>
+</html>
